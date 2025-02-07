@@ -42,7 +42,7 @@ body {
 }
 
 h1 {
-    font-size: 2.5rem;
+    font-size: 3.5rem;
     font-weight: 700;
     letter-spacing: -1px;
     color: var(--primary-color);
@@ -87,6 +87,76 @@ nav {
     transition: all 0.3s ease;
     font-family: 'Inter', sans-serif;
     font-weight: 500;
+}
+
+.headline-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+}
+
+.fixed-text {
+    font-size: 1.2rem;
+    line-height: 1;
+    font-weight: 300;
+    color: var(--primary-color);
+    text-align: center;
+}
+
+.changing-text {
+    font-size: 2.5rem !important;  /* Added !important to test */
+    line-height: 1;
+    font-weight: 600;
+    color: var(--accent-color);
+    text-align: center;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInOut 2s ease-in-out;
+}
+
+@keyframes fadeInOut {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    10% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    90% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+}
+
+/* Add responsive styles */
+@media (max-width: 768px) {
+    .fixed-text {
+        font-size: 1.5rem;
+    }
+    .changing-text {
+        font-size: 6.5rem;  /* Increased for mobile */
+        line-height: 1;
+    }
+    .intro-links {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding-top: 3rem;
+        margin-top: 0;
+        width: 100%;
+    }
+
+    .headline-container {
+        margin-bottom: 0; /* Remove margin since we're using absolute positioning */
+    }
 }
 
 .feature-options {
@@ -140,7 +210,7 @@ nav {
 
 /* Add after the header styles and before the hero section */
 .intro-section {
-    margin-top: 200px;  /* Increased significantly */
+    margin-top: 150px;  /* Increased significantly */
     padding: 1rem;
     width: 100%;
     max-width: 1400px;
@@ -155,7 +225,9 @@ nav {
     display: flex;
     flex-direction: column;
     gap: 2rem;
-    align-items: center; /* Add this */
+    align-items: center;
+    position: relative; /* Add this */
+    padding-bottom: 120px; /* Add space for absolutely positioned links */
 }
 
 .intro-content h2 {
@@ -169,10 +241,22 @@ nav {
 
 .intro-links {
     display: flex;
-    gap: 2rem;
+    flex-direction: column;
+    gap: 1rem;
     align-items: center;
-    justify-content: center; /* Add this */
-    font-family: 'Inter', sans-serif; /* Add this */
+    justify-content: center;
+    padding-top: 2rem;  /* Added fixed padding */
+    position: relative; /* Added position */
+    margin-top: 2rem;  /* Added fixed margin */
+}
+
+/* Add this new class for additional spacing control */
+.intro-links-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100px; /* Ensures minimum height to prevent jumping */
+    padding: 1rem 0;   /* Added padding */
 }
 
 .contact-link {
@@ -180,6 +264,7 @@ nav {
     text-decoration: none;
     font-weight: 600;
     transition: all 0.3s ease;
+    text-align: center; /* Added to ensure center alignment */
 }
 
 .contact-link:hover {
@@ -189,6 +274,7 @@ nav {
 .movement-text {
     color: var(--gray-dark);
     font-size: 0.9rem;
+    text-align: center; /* Added to ensure center alignment */
 }
 
 @media (max-width: 480px) {
@@ -203,26 +289,25 @@ nav {
 
 @media (max-width: 768px) {
     .hero {
-        height: auto;
-        padding-top: 0;
-        margin: 0;
+        min-height: auto;
+        padding-top: 80px;
+        margin-bottom: 1rem;  /* Keep consistent with desktop */
     }
 
     .hero-content {
-        padding: 0;
-        margin-top: 100px;
-        gap: 0;
+        padding: 0 1rem;
+        margin-top: 0.4rem;
     }
 
     .hero-image {
         margin: 0;
-        border-radius: 0;
-    }
-
-    .features {
-        margin-top: 1rem;
+        border-radius: 8px;
     }
 }
+
+    .features {
+        margin-top: 0.2rem;
+    }
 
     .intro-section {
         margin-top: 180px;
@@ -278,11 +363,12 @@ nav {
 .hero {
     position: relative;
     width: 100%;
-    height: 100vh;
+    min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
     padding-top: 80px;
+    margin-bottom: 4rem;  /* Added consistent margin */
 }
 
 #stars-canvas {
@@ -315,12 +401,12 @@ nav {
     display: flex;
     gap: 1rem;
     justify-content: center;
-    margin-top: 1rem;
+    margin-top: 40px; /* Added to move buttons down */
 }
 
 .hero-btn {
-    padding: 0.6rem 1.2rem;
-    font-size: 0.9rem;
+    padding: 0.45rem 0.9rem; /* Reduced from 0.6rem 1.2rem */
+    font-size: 0.675rem; /* Reduced from 0.9rem */
     border-radius: 8px;
     text-decoration: none;
     font-weight: 600;
@@ -340,7 +426,7 @@ nav {
 /* Features Section */
 .features {
     max-width: 1400px;
-    margin: 4rem auto;
+    margin: 0 auto 4rem;  /* Removed top margin */
     padding: 0 2rem;
     display: flex;
     flex-direction: column;

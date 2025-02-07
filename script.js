@@ -28,15 +28,16 @@ document.addEventListener('DOMContentLoaded', function() {
     animateElements.forEach(element => {
         // Set initial state
         element.style.opacity = '0';
-        element.style.transform = 'translateY(50px)';
+        element.style.transform = 'translateY(20px)';
         observer.observe(element);
     });
 
-    document.addEventListener('DOMContentLoaded', function() {
-        const featureNav = document.querySelector('.feature-nav');
-        const featureBtn = document.querySelector('.feature-btn');
-        const featureOptions = document.querySelector('.feature-options');
-        
+    // Feature navigation functionality
+    const featureNav = document.querySelector('.feature-nav');
+    const featureBtn = document.querySelector('.feature-btn');
+    const featureOptions = document.querySelector('.feature-options');
+    
+    if (featureNav && featureBtn && featureOptions) {
         featureNav.addEventListener('mouseleave', function(e) {
             // Check if mouse is outside both the main button and options
             const rect = featureNav.getBoundingClientRect();
@@ -52,11 +53,49 @@ document.addEventListener('DOMContentLoaded', function() {
             featureBtn.style.opacity = '0';
             featureOptions.style.display = 'block';
         });
-    });
+    }
 
+    // Roles animation
+    const roles = [
+        "Camera Operator",
+        "Overlay Controller",
+        "Replay Operator",
+        "Social Media Team",
+        "Match Report Writer",
+        "Multilingual Commentator",
+        "Video Review Staff",
+        "Stats Collector",
+        "Referee Review Staff",
+        "Live Data Team",
+        "Scoring Attendant",
+        "Highlight Editor"
+    ];
     
+    const changingText = document.getElementById('changingRole');
+    let currentIndex = 0;
+    
+    if (changingText) {
+        function updateRole() {
+            // Reset animation
+            changingText.style.animation = 'none';
+            changingText.offsetHeight; // Trigger reflow
+            changingText.style.animation = 'fadeInOut 4s ease-in-out';
+            
+            // Update text content
+            changingText.textContent = roles[currentIndex];
+            
+            // Move to next role
+            currentIndex = (currentIndex + 1) % roles.length;
+        }
+        
+        // Initial text
+        updateRole();
+        
+        // Update text every 4 seconds (matches animation duration)
+        setInterval(updateRole, 2000);
+    }
 
-    // Optional: Add smooth scroll for anchor links
+    // Smooth scroll for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
             e.preventDefault();
