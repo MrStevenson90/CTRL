@@ -1,12 +1,18 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Scene setup
     const container = document.getElementById('stars-canvas');
+    if (!container) {
+        console.error('Stars canvas container not found');
+        return;
+    }
+
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const camera = new THREE.PerspectiveCamera(15, window.innerWidth / window.innerHeight, 0.1, 1000);
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     
     // Set renderer properties
-    renderer.setSize(window.innerWidth, window.innerHeight);
+    const containerRect = container.getBoundingClientRect();
+    renderer.setSize(containerRect.width, containerRect.height);
     renderer.setClearColor(0xffffff, 0); // Transparent background
     container.appendChild(renderer.domElement);
     
@@ -24,7 +30,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     // Generate random star positions
-    const starsCount = 500;
+    const starsCount = 3000;
     const positions = new Float32Array(starsCount * 3);
     const velocities = new Float32Array(starsCount);
     
@@ -64,22 +70,30 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Handle window resize
     function onWindowResize() {
-        camera.aspect = window.innerWidth / window.innerHeight;
+        const containerRect = container.getBoundingClientRect();
+        camera.aspect = containerRect.width / containerRect.height;
         camera.updateProjectionMatrix();
-        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setSize(containerRect.width, containerRect.height);
     }
     
+    // Add resize observer for container size changes
+    const resizeObserver = new ResizeObserver(onWindowResize);
+    resizeObserver.observe(container);
+    
+    // Handle window resize as well
     window.addEventListener('resize', onWindowResize, false);
     
     // Start animation
     animate();
     
-    // Optional: Add mouse interaction
+    // Mouse interaction
     const mouse = new THREE.Vector2();
     
     function onMouseMove(event) {
-        mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-        mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+        const rect = container.getBoundingClientRect();
+        // Calculate mouse position relative to container
+        mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+        mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
         
         // Subtle camera movement based on mouse position
         camera.position.x += (mouse.x * 2 - camera.position.x) * 0.05;
@@ -87,5 +101,17 @@ document.addEventListener('DOMContentLoaded', function() {
         camera.lookAt(scene.position);
     }
     
-    window.addEventListener('mousemove', onMouseMove, false);
+    // Add mouse movement only when mouse is over container
+    container.addEventListener('mousemove', onMouseMove, false);
+    
+    // Cleanup function
+    function cleanup() {
+        resizeObserver.disconnect();
+        window.removeEventListener('resize', onWindowResize);
+        container.removeEventListener('mousemove', onMouseMove);
+        renderer.dispose();
+    }
+
+    // Cleanup on page unload
+    window.addEventListener('unload', cleanup);
 });

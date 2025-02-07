@@ -219,6 +219,7 @@ nav {
     text-align: center;
     position: relative;  /* Add this */
     z-index: 2;         /* Add this */
+    overflow: hidden;
 }
 
 .intro-content {
@@ -228,6 +229,7 @@ nav {
     align-items: center;
     position: relative; /* Add this */
     padding-bottom: 120px; /* Add space for absolutely positioned links */
+    z-index: 1;
 }
 
 .intro-content h2 {
@@ -377,7 +379,7 @@ nav {
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: 1;
+    z-index: 0;
 }
 
 .hero-content {

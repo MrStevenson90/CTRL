@@ -34,6 +34,7 @@
     <main>
 
         <section class="intro-section animate-on-scroll">
+            <div id="stars-canvas"></div>
             <div class="intro-content">
                 <div class="headline-container">
                     <h2 class="fixed-text">Your Sports Organizations</h2>
@@ -52,7 +53,6 @@
 
 
         <section class="hero">
-            <div id="stars-canvas"></div>
             <div class="hero-content animate-on-scroll">
                 <img src="main.gif" alt="CTRL Camera System" class="hero-image">
             </div>
@@ -112,7 +112,10 @@
         </div>
     </footer>
 
-    <script src="stars.js"></script>
-    <script src="script.js"></script>
+<!-- Load Three.js first -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<!-- Then load your scripts -->
+<script src="stars.js"></script>
+<script src="script.js"></script>
 </body>
 </html>

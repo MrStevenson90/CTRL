@@ -72,14 +72,17 @@ document.addEventListener('DOMContentLoaded', function() {
     ];
     
     const changingText = document.getElementById('changingRole');
+    console.log('changingText element:', changingText); // Debug line
     let currentIndex = 0;
     
     if (changingText) {
         function updateRole() {
+            console.log('Updating role to:', roles[currentIndex]); // Debug line
+            
             // Reset animation
             changingText.style.animation = 'none';
             changingText.offsetHeight; // Trigger reflow
-            changingText.style.animation = 'fadeInOut 4s ease-in-out';
+            changingText.style.animation = 'fadeInOut 2s ease-in-out';
             
             // Update text content
             changingText.textContent = roles[currentIndex];
@@ -91,8 +94,13 @@ document.addEventListener('DOMContentLoaded', function() {
         // Initial text
         updateRole();
         
-        // Update text every 4 seconds (matches animation duration)
-        setInterval(updateRole, 2000);
+        // Update text every 2 seconds (matches CSS animation duration)
+        const interval = setInterval(updateRole, 2000);
+        
+        // Clear interval if the element is removed
+        window.addEventListener('unload', () => clearInterval(interval));
+    } else {
+        console.error('Could not find element with id "changingRole"'); // Debug line
     }
 
     // Smooth scroll for anchor links
